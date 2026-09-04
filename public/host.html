@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Экран ведущего — Quiz Times</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="side-code left">times times times times times times times times times times times times times times times times times times</div>
+  <div class="side-code right">times times times times times times times times times times times times times times times times times times</div>
+
+  <div class="page-shell container-wide">
+    <header class="site-brand host-header">
+      <div>
+        <a class="brand" href="/">
+          <img class="brand-mark" src="/img/logo.png?v=3" alt="Times by">
+        </a>
+        <p class="subtitle" id="status-text">Ожидание подключения игроков</p>
+      </div>
+      <div class="host-actions">
+        <div id="phase-badge" class="badge registration">Регистрация</div>
+        <button type="button" class="btn btn-danger" id="btn-restart">Начать заново</button>
+      </div>
+    </header>
+
+    <div class="join-card" id="join-card">
+      <div class="join-qr-wrap">
+        <img id="join-qr" class="join-qr" alt="QR-код для подключения игроков">
+        <p class="join-qr-hint">Наведите камеру телефона</p>
+      </div>
+      <div class="join-copy">
+        <p class="join-label">Ссылка для игроков в этой сети</p>
+        <p class="join-url" id="join-url">http://localhost:3000/player.html</p>
+        <button type="button" class="btn btn-secondary" id="btn-copy-link">Копировать</button>
+      </div>
+    </div>
+
+    <div class="host-layout has-sidebar">
+      <main>
+        <!-- Registration phase -->
+        <div id="screen-registration" class="card">
+          <div class="window-bar">Регистрация участников</div>
+          <div class="card-body">
+            <h2>Лобби</h2>
+            <p class="subtitle">Игроки регистрируются на своих устройствах. До 30 участников.</p>
+            <div class="glitch-band"></div>
+            <div class="players-grid" id="players-list"></div>
+            <p class="text-muted" style="margin-top:16px" id="player-count">0 / 30 участников</p>
+            <div class="host-controls">
+              <button class="btn btn-primary btn-lg" id="btn-start" disabled>Начать квиз ↗</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Playing / Review phase -->
+        <div id="screen-playing" class="card hidden">
+          <div class="window-bar blue" id="playing-window-title">Вопрос</div>
+          <div class="card-body question-display">
+            <div class="round-title" id="round-info"></div>
+            <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+            <div class="timer-wrap">
+              <div class="timer" id="timer">30</div>
+              <div class="equalizer" id="equalizer" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="question-text" id="question-text"></div>
+            <div class="answer-reveal hidden" id="answer-reveal"></div>
+          </div>
+        </div>
+
+        <!-- Round break -->
+        <div id="screen-round-break" class="card hidden">
+          <div class="window-bar teal">Перерыв</div>
+          <div class="card-body">
+            <h2 id="round-break-title">Тур завершён</h2>
+            <p class="subtitle" id="round-break-desc"></p>
+            <div class="host-controls">
+              <button class="btn btn-primary btn-lg" id="btn-next-round">Следующий тур ↗</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Finished -->
+        <div id="screen-finished" class="card hidden">
+          <div class="window-bar">Результаты</div>
+          <div class="card-body">
+            <h2>Турнирная таблица</h2>
+            <div class="leaderboard-wrap">
+              <table class="leaderboard" id="leaderboard-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Участник</th>
+                    <th>Баллы</th>
+                  </tr>
+                </thead>
+                <tbody id="leaderboard-body"></tbody>
+              </table>
+            </div>
+            <div class="host-controls">
+              <button class="btn btn-danger" id="btn-reset-finish">Новая игра</button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <aside class="card" id="scores-panel">
+        <div class="window-bar teal">Баллы · правка</div>
+        <div class="card-body">
+          <p class="score-hint">+ / − меняет счёт вручную</p>
+          <div class="scores-list" id="scores-list"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/host.js"></script>
+</body>
+</html>

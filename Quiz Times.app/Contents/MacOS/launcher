@@ -1,0 +1,10 @@
+#!/bin/bash
+# Запускает квиз в окне Терминала — так видно ссылку для игроков и сервер не выключается.
+ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
+COMMAND="$ROOT/Запустить Quiz Times.command"
+if [ ! -f "$COMMAND" ]; then
+  osascript -e "display dialog \"Не найден файл запуска квиза. Положите приложение Quiz Times.app в ту же папку, где лежит проект.\" with title \"Quiz Times\" buttons {\"OK\"}" >/dev/null
+  exit 1
+fi
+chmod +x "$ROOT/start-quiz.sh" "$COMMAND" 2>/dev/null || true
+open "$COMMAND"

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Квиз — Quiz Times</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="side-code left">times times times times times times times times times times times times times times times times times times</div>
+  <div class="side-code right">times times times times times times times times times times times times times times times times times times</div>
+
+  <div class="page-shell container">
+    <!-- Registration -->
+    <div id="screen-register">
+      <header class="site-brand">
+        <a class="brand" href="/">
+          <img class="brand-mark" src="/img/logo.png?v=3" alt="Times by">
+        </a>
+        <span class="brand-tag">#PLAYER</span>
+      </header>
+      <h1>Регистрация</h1>
+      <p class="subtitle">Зарегистрируйтесь для участия в квизе</p>
+      <div class="card">
+        <div class="window-bar">User Registration</div>
+        <div class="card-body">
+          <form id="register-form">
+            <label class="label" for="name-input">Введите имя</label>
+            <input
+              class="input"
+              type="text"
+              id="name-input"
+              placeholder="Введите имя"
+              maxlength="60"
+              required
+              autocomplete="off"
+            >
+            <button class="btn btn-primary btn-lg" type="submit" style="width:100%;margin-top:20px">
+              Зарегистрироваться ↗
+            </button>
+            <p class="error-msg hidden" id="register-error"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Waiting -->
+    <div id="screen-waiting" class="hidden">
+      <div class="player-status">
+        <div class="notif-card">
+          <span class="notif-icon">OK</span>
+          <div>
+            <h2>Вы зарегистрированы!</h2>
+            <p class="player-name-display" id="player-name"></p>
+          </div>
+        </div>
+        <p class="subtitle" style="margin-top:24px">
+          Ожидайте начала квиза<span class="waiting-dots"></span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Playing -->
+    <div id="screen-playing" class="hidden">
+      <div class="player-status">
+        <p class="player-name-display" id="playing-name"></p>
+        <p class="subtitle" id="round-label"></p>
+      </div>
+      <div class="card">
+        <div class="window-bar blue">Ваш ответ</div>
+        <div class="card-body">
+          <div class="timer-wrap">
+            <div class="timer" id="timer">30</div>
+            <div class="equalizer" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <p class="question-text" id="question-text"></p>
+          <form id="answer-form" class="answer-form">
+            <label class="label" for="answer-input">Ваш ответ</label>
+            <input
+              class="input"
+              type="text"
+              id="answer-input"
+              placeholder="Введите ответ..."
+              autocomplete="off"
+            >
+            <button class="btn btn-primary btn-lg" type="submit" id="btn-ok" style="width:100%;margin-top:16px">
+              Ок
+            </button>
+            <p class="answer-status hidden" id="answer-status">Ответ принят</p>
+          </form>
+          <div class="result-flash hidden" id="result-flash"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Review -->
+    <div id="screen-review" class="hidden">
+      <div class="card">
+        <div class="window-bar">Правильный ответ</div>
+        <div class="card-body">
+          <div class="timer-wrap">
+            <div class="timer" id="review-timer">3</div>
+          </div>
+          <p class="question-text" id="review-question"></p>
+          <div class="answer-reveal hidden" id="review-answer"></div>
+          <div class="result-flash hidden" id="review-result"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Round break -->
+    <div id="screen-round-break" class="hidden">
+      <div class="player-status">
+        <div class="card">
+          <div class="window-bar teal">Перерыв</div>
+          <div class="card-body">
+            <h2>Тур завершён</h2>
+            <p class="subtitle">Ожидайте следующий тур<span class="waiting-dots"></span></p>
+            <p style="margin-top:16px;font-family:var(--font-pixel);font-size:1.4rem">
+              Ваши баллы: <strong id="break-score">0</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Finished -->
+    <div id="screen-finished" class="hidden">
+      <h2>Результаты</h2>
+      <div class="card">
+        <div class="window-bar">Leaderboard</div>
+        <div class="card-body">
+          <div class="leaderboard-wrap">
+            <table class="leaderboard" id="leaderboard-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Участник</th>
+                  <th>Баллы</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboard-body"></tbody>
+            </table>
+          </div>
+          <div class="prize-message hidden" id="prize-message"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="social-bar" class="social-bar hidden" role="complementary">
+    <button type="button" class="social-close" id="social-close" aria-label="Закрыть">×</button>
+    <p class="social-kicker">+1 балл</p>
+    <p class="social-title">Подпишитесь на наши социальные сети. Читайте хорошие новости!</p>
+    <div class="social-links">
+      <a class="social-link" href="https://t.me/+KR3y9J7khf9mYmFi" target="_blank" rel="noopener noreferrer">Telegram</a>
+      <a class="social-link" href="https://www.instagram.com/times.bel/" target="_blank" rel="noopener noreferrer">Instagram</a>
+    </div>
+    <p class="social-bonus hidden" id="social-bonus">+1 балл начислен</p>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/player.js"></script>
+</body>
+</html>
